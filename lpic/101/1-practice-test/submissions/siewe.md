@@ -1,4 +1,5 @@
 Q1. = B
+
 Q2.
 | BIOS  |   UEFI |
 | -- | -- |
@@ -20,7 +21,7 @@ you have to know that all inspection commands are stored in files found in the /
 -The /sys directory has the specific purpose of storing device information and kernel data related to hardware
 -it also contains information about the system and files in the  /sys perform some similar function as the files in the /proc
 
-Q5. = C
+Q5. = C and B
 
 Q6
 you have to know that both apt and dpkg are debian package managers
@@ -29,13 +30,22 @@ you have to know that both apt and dpkg are debian package managers
 |apt is a high-level package manager with automatic dependency resolution, |while dpkg is a lower-level tool that requires manual dependency handling.|
 
 Q7.
+sudo apt-get upgrade
+sudo apt dist-urgrade
+sudo apt-get remove --purge
 
 Q8
-
+Create a new file in the ``/etc/yum.repos.d/ directory`` with a .repo extension, for example, example.repo
+Open the file in a text editor and add the following configuration:
+[example]
+name=Example Repository
+baseurl=http://repo.example.com
+enabled=1
+gpgcheck=0  # optional, set to 1 if you want to enable GPG signature checking
 Q9. = B
 
 Q10
--echo
+grep /var/log/syslog/ | wc -l
 
 Q11
 |HARD LINK     |                                                                     SOFT LINK|
@@ -75,6 +85,45 @@ Create a mount point for the new partition using ``mkdir``
 Open the ``/etc/fstab`` file in a text editor using ``sudo nano /etc/fstab``  
 Update the system’s partition table using ``sudo update-initramfs -u``
 Verify the mount by checking the /data directory using ``ls /data``
+
+Q18 
+The purpose of the ``/etc/fstab`` file is to configure static information about file systems, such as their mount points, file system types, and mount options.
+
+BONUS
+ Power-On Self-Test (POST) and Bootloader Selection
+
+    The system’s BIOS or UEFI firmware initializes the hardware, performing a power-on self-test (POST) to check the system’s configuration and detect any issues.
+    The BIOS or UEFI firmware searches for a bootable device (e.g., hard drive, solid-state drive, or USB drive) and selects a bootloader (GRUB, LILO, or others) to execute.
+ 
+  Bootloader Execution
+
+    The selected bootloader (GRUB, in most modern Linux distributions) is loaded into memory from the MBR (Master Boot Record) or EFI system partition.
+    GRUB displays a boot menu, allowing the user to select an operating system or kernel image to boot.
+    GRUB loads the selected kernel image into memory and passes control to it.
+
+Kernel Initialization
+
+    The kernel is loaded into memory and initialized.
+    The kernel performs hardware initialization, configuring memory, and setting up the system’s architecture.
+    The kernel extracts the initramfs (initial RAM filesystem) from the bootloader, which contains essential drivers and modules needed to mount the root filesystem
+    The kernel uses the initramfs to mount the root filesystem (e.g., /dev/sda1) and sets up the system’s root directory.
+    The kernel loads additional kernel modules from the /lib/modules directory, as needed.
+
+System Initialization
+
+    The kernel executes the init process (e.g., systemd, sysvinit, or upstart) from the initramfs.
+    The init process initializes system services, such as:
+        Network interfaces
+        Disk partitions
+        Filesystems
+        System daemons (e.g., sshd, httpd)
+    The init process sets up the system’s runtime environment, including setting the system clock, configuring locale settings, and initializing user accounts.
+
+Fully Loaded OS
+
+    The system is now fully initialized and ready for user interaction.
+    The user can log in, access the file system, and run applications.
+
 
 
 
